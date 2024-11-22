@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="headtitle">{% block title %}Highlights{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div>
+    <div class="text-center mx-auto" style="width: 75%;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Coach name</th>
+            <th scope="col">Number of wins</th>
+          </tr>
+        </thead>
+        <tbody>
+      {% for coach in coaches %}
+      <tr>
+        <td><a href="{{url_for('coach.coaches')}}/{{coach[2]}}">{{coach[0]}}</a></td>
+        <td>{{coach[1]}}</td>
+      </tr>
+      {% endfor %}
+      </ul>
+    </div>
+    <br>
+
+    <div>
+      <h4>Top Players</h4>
+      <ol class="list-group list-group-numbered">
+        <li class="list-group-item d-flex justify-content-between align-items-start list-group-item-dark">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">Player Name</div>
+          </div>
+          <span class="badge text-bg-primary rounded-pill">Total Points</span>
+        </li>
+        {% for player in players %}
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <a href="{{url_for('player.players')}}/{{player[3]}}"><div class="fw-bold">{{player[0]}} {{player[1]}}</div></a>
+          </div>
+          <span class="badge text-bg-primary rounded-pill">{{player[2]}}</span>
+        </li>
+        {% endfor %}
+      </ol>
+    </div>
+
+
+    <br>
+    <div>
+    <h4>Recent Games</h4>
+    {% for game in games %}
+    <div class="card text-center mx-auto p-2" style="width: 50%;">
+      <div class="card-header">
+        {{game[0]}}
+      </div>
+      <div class="card-body">
+        <a href="{{url_for('game.games')}}/{{game[5]}}"><h5 class="card-title">{{game[3]}} Vs. {{game[4]}}</h5></a>
+        <p class="card-text">{{game[3]}}: {{game[1]}} </p>
+        <p class="card-text">{{game[4]}}: {{game[2]}} </p>
+      </div>
+    </div>
+    {% endfor %}
+    </div>
+    <br>
+    <h4>Best Performing Coaches</h4>
+</div>
+{% endblock %}

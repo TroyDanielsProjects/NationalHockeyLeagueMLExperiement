@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="headtitle">{% block title %}Coaches for {{season}} Season{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{url_for('coach.coaches')}}">
+    <select class="form-select" aria-label="Default select example" name="season_select">
+        {% for year in years%}
+        <option value={{year}}>{{year}} Season</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary">Go</button>
+</form>
+<div class="text-center mx-auto" style="width: 85%;">
+    <table class="table">
+    <thead>
+        <tr>
+        <th scope="col">Coach Name</th>
+        <th scope="col">Team</th>
+        <th scope="col">Year</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for coach in coaches%}
+    <tr>
+    <td>{{coach[0]}}</td>
+    <td>{{coach[2]}}</td>
+    <td>{{coach[4]}}</td>
+    <td>
+        <a href="{{url_for('coach.coaches')}}/{{coach[1]}}"><button type="button" class="btn btn-primary">Go to Coach</button></a>
+    </td>
+    </tr>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

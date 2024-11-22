@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="headtitle">{% block title %}{{player[1]}} {{player[2]}}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form>
+    <div class="row g-3" style="justify-content: space-between; margin-left: 10px; margin-right: 10px;">
+        <div class="col-md-3">
+          <label for="inputEmail4" class="form-label">First Name</label>
+          <input type="text" class="form-control" readonly placeholder="First name" aria-label="First name" value={{player[1]}}>
+        </div>
+        <div class="col-md-3">
+          <label for="inputPassword4" class="form-label">Last Name</label>
+          <input type="text" class="form-control" readonly placeholder="Last name" aria-label="Last name" value="{{player[2]}}">
+        </div>
+        <div class="col-md-3">
+            <label for="inputEmail4" class="form-label">Nationality</label>
+            <input type="text" class="form-control" readonly placeholder="Nationality" aria-label="Nationality" value="{{player[4]}}">
+        </div>
+      </div>
+    <div class="row g-3" style="justify-content: space-between; margin-left: 10px; margin-right: 10px;">
+        <div class="col-md-3">
+            <label for="inputPassword4" class="form-label">Date Of Birth</label>
+            <input type="date" class="form-control" readonly placeholder="DOB" aria-label="DOB" value="{{player[3]}}">
+        </div>
+        <div class="col-md-3">
+            <label for="inputEmail4" class="form-label">Position</label>
+            <input type="text" class="form-control" readonly placeholder="Position" aria-label="Position" value="{{player[5]}}">
+        </div>
+        <div class="col-md-3">
+            <label for="inputEmail4" class="form-label">Number</label>
+            <input type="number" class="form-control" readonly placeholder="Number" aria-label="Number" value="{{player[6]}}">
+        </div>
+    </div>
+</form>
+<br>
+<!-- <a href="{{url_for('player.players')}}/update/{{player[0]}}"><button type="button" class="btn btn-info" style="margin-left: 20px;">Update Player</button></a>
+<a href="{{url_for('player.players')}}/delete/{{player[0]}}"><button type="button" class="btn btn-danger">Delete Player</button></a> -->
+
+
+<H5 style="text-align: center;">Seasons Played</H5>
+<div style="justify-content: center; width: 100%;">
+<ul class="list-group" style="justify-content: center;"></ul>
+{% for season in seasons %}
+    <li class="list-group-item d-flex justify-content-between align-items-center" style="width: 60%; margin-left: 20%;">
+      <a href="{{url_for('team.teams')}}/{{season[2]}}">{{season[1]}}</a>
+    <a href="{{url_for('season.seasons')}}/{{season[0]}}/{{season[2]}}">
+      <span class="badge text-bg-primary rounded-pill">{{season[0]}}</span>
+    </a>
+{% endfor %}
+</ul>
+</div>
+<br>
+<br>
+<div class="text-center mx-auto" style="width: 85%;">
+  <h5>Career Stats</h5>
+  {% if player[5] == 'G'%}
+  <table class="table">
+    <thead>
+        <tr>
+        <th scope="col">Saves</th>
+        <th scope="col">Shots Faced</th>
+        <th scope="col">Goals Conceded</th>
+        <th scope="col">Save Percentage</th>
+        <th scope="col">Shutouts</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>{{player[16]}}</td>
+    <td>{{player[15]}}</td>
+    <td>{{player[17]}}</td>
+    <td>{{player[19]}}</td>
+    <td>{{player[18]}}</td>
+    </tr>
+    </ul>
+  {% else %}
+  <table class="table">
+    <thead>
+        <tr>
+        <th scope="col">Goals</th>
+        <th scope="col">Assists</th>
+        <th scope="col">Shots</th>
+        <th scope="col">Hits</th>
+        <th scope="col">Shots Blocked</th>
+        <th scope="col">Games Played</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+    <td>{{player[9]}}</td>
+    <td>{{player[10]}}</td>
+    <td>{{player[8]}}</td>
+    <td>{{player[11]}}</td>
+    <td>{{player[12]}}</td>
+    <td>{{player[13]}}</td>
+    </tr>
+    </ul>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="headtitle">{% block title %}Coaches{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{url_for('coach.coaches')}}">
+    <select class="form-select" aria-label="Default select example" name="season_select">
+        <option selected>Select Season</option>
+        {% for year in years%}
+        <option value={{year}}>{{year}} Season</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="btn btn-primary">Go</button>
+</form>
+<div class="text-center mx-auto" style="width: 85%;">
+    <table class="table">
+    <thead>
+        <tr>
+        <th scope="col">Coach Name</th>
+        <th><a href="{{url_for('coach.add_coaches_form')}}"><button type="button" class="btn btn-success">Add Coach</button></a></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for coach in coaches%}
+    <tr>
+    <td>{{coach[0]}}</td>
+    <td>
+        <a href="{{url_for('coach.coaches')}}/{{coach[1]}}"><button type="button" class="btn btn-primary">Go to Coach</button></a>
+        <!-- <a href="{{url_for('coach.coaches')}}/update/{{coach[1]}}"><button type="button" class="btn btn-info">Update Coach</button></a>
+      <a href="{{url_for('coach.coaches')}}/delete/{{coach[1]}}"><button type="button" class="btn btn-danger">Delete Player</button></a> -->
+    </td>
+    </tr>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}

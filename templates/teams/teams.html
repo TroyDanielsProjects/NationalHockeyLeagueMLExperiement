@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="headtitle">{% block title %}Teams{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="text-center mx-auto" style="width: 85%;">
+    <table class="table">
+      <thead>
+          <tr>
+          <th scope="col">Team Name</th>
+          <th scope="col">Location</th>
+          </tr>
+      </thead>
+      <tbody>
+      {% for team in teams%}
+      <tr>
+      <td><a href="{{url_for('team.teams')}}/{{team[0]}}">{{team[1]}}</a></td>
+      <td>{{team[2]}}</td>
+      </tr>
+      {% endfor %}
+      </ul>
+  </div>
+{% endblock %}

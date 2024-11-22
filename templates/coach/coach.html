@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="headtitle">{% block title %}Coach{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div style="display: flexbox; justify-content: center; width: 100%; margin: 0; padding: 0;">
+<form>
+    <div class="row g-3" style=" margin-left: 10px; margin-right: 10px; justify-content: center;">
+        <div class="col-md-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" readonly placeholder="Name" aria-label="Name" value="{{coach[1]}}">
+        </div>
+        <div class="col-md-3">
+            <label for="name" class="form-label">Date of Birth</label>
+            <input type="text" class="form-control" readonly placeholder="DOB" aria-label="DOB" value="{{coach[2]}}">
+        </div>
+      </div>
+</form>
+<br>
+<H5 style="text-align: center;">Seasons Coached</H5>
+<div style="justify-content: center; width: 100%;">
+<ul class="list-group" style="justify-content: center;"></ul>
+{% for season in seasons_coached %}
+    <li class="list-group-item d-flex justify-content-between align-items-center" style="width: 60%; margin-left: 20%;">
+      <a href="{{url_for('team.teams')}}/{{season[2]}}">{{season[0]}}</a>
+      <a href="{{url_for('season.seasons')}}/{{season[1]}}/{{season[2]}}"><span class="badge text-bg-primary rounded-pill">{{season[1]}}</span></a>
+{% endfor %}
+</ul>
+</div>
+</div>
+{% endblock %}

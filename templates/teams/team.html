@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="headtitle">{% block title %}{{team[1]}}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div class="text-center mx-auto" style="width: 85%;">
+    <h3>Seasons Played</h3>
+    <table class="table">
+      <thead>
+          <tr>
+          <th scope="col">Season Played</th>
+          <th scope="col">Coach</th>
+          <th scope="col">Venue</th>
+          <th scope="col">Venue City</th>
+          <th scope="col">Venue State</th>
+          <th scope="col">Venue Capacity</th>
+          </tr>
+      </thead>
+      <tbody>
+      {% for season in seasons %}
+      <tr>
+      <td><a href="{{url_for('season.seasons')}}/{{season[0]}}/{{team[0]}}">{{season[0]}}</a></td>
+      <td><a href="{{url_for('coach.coaches')}}/{{season[6]}}">{{season[1]}}</a></td>
+      <td>{{season[2]}}</td>
+      <td>{{season[3]}}</td>
+      <td>{{season[4]}}</td>
+      <td>{{season[5]}}</td>
+      </tr>
+      </ul>
+      {% endfor %}
+  </div>
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="headtitle">{% block title %}Stats{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="text-center mx-auto" style="width: 85%;">
+    <p> Select stat to view leaders </p>
+    <p> 2015 </p>
+    <form method="POST" action="{{url_for('stats.stats')}}">
+        <input type="hidden" name="year" value="2015">
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Shots">Shots</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Goals">Goals</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Assists">Assists</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Hits">Hits</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Blocks">Blocks</button>
+        <br> <br>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Shots Faced">Shots Faced</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Saves">Saves</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Goals Conceded">Goals Conceded</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Save Pct">Save %</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Shutouts">Shutouts</button>
+    </form>
+</div>
+
+<br>
+
+<div class="text-center mx-auto" style="width: 85%;">
+    <p> 2016 </p>
+    <form method="POST" action="{{url_for('stats.stats')}}">
+        <input type="hidden" name="year" value="2016">
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Shots">Shots</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Goals">Goals</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Assists">Assists</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Hits">Hits</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Blocks">Blocks</button>
+        <br> <br>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Shots Faced">Shots Faced</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Saves">Saves</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Goals Conceded">Goals Conceded</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Save Pct">Save %</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Shutouts">Shutouts</button>
+    </form>
+</div>
+
+<br>
+
+<div class="text-center mx-auto" style="width: 85%;">
+    <p> 2017 </p>
+    <form method="POST" action="{{url_for('stats.stats')}}">
+      <input type="hidden" name="year" value="2017">
+      <button type="submit" class="btn btn-primary" name="stat_select" value="Shots">Shots</button>
+      <button type="submit" class="btn btn-primary" name="stat_select" value="Goals">Goals</button>
+      <button type="submit" class="btn btn-primary" name="stat_select" value="Assists">Assists</button>
+      <button type="submit" class="btn btn-primary" name="stat_select" value="Hits">Hits</button>
+      <button type="submit" class="btn btn-primary" name="stat_select" value="Blocks">Blocks</button>
+        <br> <br>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Shots Faced">Shots Faced</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Saves">Saves</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Goals Conceded">Goals Conceded</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Save Pct">Save %</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Shutouts">Shutouts</button>
+    </form>
+</div>
+
+<br>
+
+<div class="text-center mx-auto" style="width: 85%;">
+    <p> 2018 </p>
+    <form method="POST" action="{{url_for('stats.stats')}}">
+      <input type="hidden" name="year" value="2018">
+      <button type="submit" class="btn btn-primary" name="stat_select" value="Shots">Shots</button>
+      <button type="submit" class="btn btn-primary" name="stat_select" value="Goals">Goals</button>
+      <button type="submit" class="btn btn-primary" name="stat_select" value="Assists">Assists</button>
+      <button type="submit" class="btn btn-primary" name="stat_select" value="Hits">Hits</button>
+      <button type="submit" class="btn btn-primary" name="stat_select" value="Blocks">Blocks</button>
+        <br> <br>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Shots Faced">Shots Faced</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Saves">Saves</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Goals Conceded">Goals Conceded</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Save Pct">Save %</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Shutouts">Shutouts</button>
+    </form>
+</div>
+
+<br>
+
+<div class="text-center mx-auto" style="width: 85%;">
+    <p> All-Time </p>
+    <form method="POST" action="{{url_for('stats.stats')}}">
+      <button type="submit" class="btn btn-primary" name="stat_select" value="Shots">Shots</button>
+      <button type="submit" class="btn btn-primary" name="stat_select" value="Goals">Goals</button>
+      <button type="submit" class="btn btn-primary" name="stat_select" value="Assists">Assists</button>
+      <button type="submit" class="btn btn-primary" name="stat_select" value="Hits">Hits</button>
+      <button type="submit" class="btn btn-primary" name="stat_select" value="Blocks">Blocks</button>
+        <br> <br>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Shots Faced">Shots Faced</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Saves">Saves</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Goals Conceded">Goals Conceded</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Save Pct">Save %</button>
+        <button type="submit" class="btn btn-primary" name="stat_select" value="Shutouts">Shutouts</button>
+    </form>
+</div>
+
+
+{% if players %}
+  <table class="table">
+    <thead>
+        <tr>
+        <th scope="col">Player Name</th>
+        <th scope="col">{% if year %} {{ year }} {% endif %} {{ stat }}  Leaders</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for player in players %}
+    <tr>
+    <td>{{player[0]}}</td>
+    <td>{{player[1]}}</td>
+    <td>
+    </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endif %}
+
+{% endblock %}

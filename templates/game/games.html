@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="headtitle">{% block title %}Games{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div style="display: flex; flex-wrap: wrap;">
+{% for game in games %}
+<div class="card text-center mx-auto" style="width: 600px; margin-top: 10px;">
+    <div class="card-body">
+      <a href="{{ url_for('game.games') }}/{{game[5]}}"><h5 class="card-title">{{game[3]}} : {{game[1]}}  Vs. {{game[4]}} : {{game[2]}} </h5></a>
+      <p class="card-text">{{game[0]}}</p>
+    </div>
+</div>
+{% endfor %}
+</div>
+{% endblock %}

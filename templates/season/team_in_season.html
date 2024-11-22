@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="headtitle">{% block title %}{{team[4]-1}} - {{team[4]}} {{team[0]}}{% endblock %}</h1>
+  <br>
+{% endblock %}
+
+{% block content %}
+<div class="text-center mx-auto" style="width: 85%;">
+    <h3>Season Stats</h3>
+    <table class="table">
+      <thead>
+          <tr>
+          <th scope="col">Team Name</th>
+          <th scope="col">Wins</th>
+          <th scope="col">Losses</th>
+          <th scope="col">Games Played</th>
+          </tr>
+      </thead>
+      <tbody>
+      <tr>
+      <td>{{team[0]}}</td>
+      <td>{{team[2]}}</td>
+      <td>{{team[3] - team[2]}}</td>
+      <td>{{team[3]}}</td>
+      </tr>
+      </ul>
+  </div>
+
+  <div class="text-center mx-auto" style="width: 85%;">
+    <table class="table">
+      <thead>
+          <tr>
+          <th scope="col">Home Team</th>
+          <th scope="col">Away Team</th>
+          <th scope="col">Home Team Score</th>
+          <th scope="col">Away Team Score</th>
+          <th scope="col">Date</th>
+          </tr>
+      </thead>
+      <tbody>
+      {% for game in games%}
+      <tr>
+      <td><a href="{{url_for('team.teams')}}/{{game[5]}}">{{game[0]}}</a></td>
+      <td><a href="{{url_for('team.teams')}}/{{game[6]}}">{{game[1]}}</a></td>
+      <td>{{game[2]}}</td>
+      <td>{{game[3]}}</td>
+      <td>{{game[4]}}</td>
+      <td><a href="{{url_for('game.games')}}/{{game[7]}}"><button type="button" class="btn btn-primary">Go to Game</button></a></td>
+      </tr>
+      {% endfor %}
+      </ul>
+  </div>
+  
+  <br>
+  <br>
+  <br>
+
+  <h3>Games Played</h3>
+  <div class="text-center mx-auto" style="width: 85%;">
+    <table class="table">
+      <thead>
+          <tr>
+          <th scope="col">Player Name</th>
+          <th scope="col">Position</th>
+          <th scope="col">Number</th>
+          </tr>
+      </thead>
+      <tbody>
+      {% for player in players%}
+      <tr>
+      <td><a href="{{url_for('player.players')}}/{{player[4]}}">{{player[0]}} {{player[1]}}</a></td>
+      <td>{{player[2]}}</td>
+      <td>{{player[3]}}</td>
+      </tr>
+      {% endfor %}
+      </ul>
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <h3>Roster</h3>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="headtitle">{% block title %}Coach{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<div style="display: flexbox; justify-content: center; width: 100%; margin: 0; padding: 0;">
+<form method="POST" action="{{url_for('coach.update_coach')}}">
+    <div class="row g-3" style=" margin-left: 10px; margin-right: 10px; justify-content: center;">
+        <div class="col-md-3">
+          <label for="name" class="form-label">Name</label>
+          <input type="text" class="form-control" placeholder="Name" aria-label="Name" name="name" value="{{coach[1]}}">
+        </div>
+        <div class="col-md-3">
+            <label for="name" class="form-label">Date of Birth</label>
+            <input type="text" class="form-control"  placeholder="DOB" aria-label="DOB" name="DOB" value="{{coach[2]}}">
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" style="margin-left: 20px;">Update</button>
+</form>
+{% endblock %}

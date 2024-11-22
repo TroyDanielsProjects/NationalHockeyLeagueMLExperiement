@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="headtitle">{% block title %}Search Results{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+  <div class="text-center mx-auto" style="width: 85%;">
+    <table class="table">
+      <thead>
+          <tr>
+          <th scope="col">Type</th>
+          <th scope="col">Match</th>
+          <th scope="col">Link</th>
+          </tr>
+      </thead>
+      <tbody>
+      {% for player in players%}
+      <tr>
+      <td>Player</td>
+      <td>{{player[0]}} {{player[1]}}</td>
+      <td><a href="{{url_for('player.players')}}/{{player[2]}}"><button type="button" class="btn btn-info" style="margin-left: 20px;">Go to player</button></a></td>
+      </tr>
+      {% endfor %}
+
+      {% for coach in coaches%}
+      <tr>
+      <td>Coach</td>
+      <td>{{coach[0]}}</td>
+      <td><a href="{{url_for('coach.coaches')}}/{{coach[1]}}"><button type="button" class="btn btn-info" style="margin-left: 20px;">Go to Coach</button></a></td>
+      </tr>
+      {% endfor %}
+
+      {% for team in teams%}
+      <tr>
+      <td>Team</td>
+      <td>{{team[0]}}</td>
+      <td><a href="{{url_for('team.teams')}}/{{team[1]}}"><button type="button" class="btn btn-info" style="margin-left: 20px;">Go to Team</button></a></td>
+      </tr>
+      {% endfor %}
+      </ul>
+  </div>
+{% endblock %}

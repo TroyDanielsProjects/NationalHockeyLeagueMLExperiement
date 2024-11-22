@@ -1,0 +1,13 @@
+body{ 
+    font-size: 15pt;
+    font-family: arial;
+  }
+
+header {
+    width: 100%;
+    text-align: center;
+}
+
+#headtitle {
+    width: 100%;
+}

@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="headtitle" style="margin-top: 30px;">{% block title %} <a href="{{url_for('season.seasons')}}/{{game[5]}}/{{game[6]}}">{{game[3]}}</a>  Vs. <a href="{{url_for('season.seasons')}}/{{game[5]}}/{{game[7]}}">{{game[4]}}</a> {% endblock %}</h1>
+  <h1 class="headtitle"> {{game[1]}} &nbsp; &nbsp &nbsp; &nbsp &nbsp; &nbsp; &nbsp; &nbsp  &nbsp; &nbsp : &nbsp; &nbsp &nbsp; &nbsp &nbsp; &nbsp; &nbsp  &nbsp; &nbsp &nbsp; {{game[2]}}</h1>
+  <h3 class="headtitle">{{game[0]}} </h3>
+{% endblock %}
+
+{% block content %}
+<br>
+<br>
+<div>
+  <div class="text-center mx-auto" style="width: 60%;">
+    <h4>{{game[3]}} Skaters</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Player Name</th>
+          <th scope="col">Position</th>
+          <th scope="col">Number</th>
+          <th scope="col">Goals</th>
+          <th scope="col">Assists</th>
+          <th scope="col">Shots</th>
+          <th scope="col">Hits</th>
+        </tr>
+      </thead>
+      <tbody>
+    {% for player in home_players %}
+      {% if player[2] != 'G' %}
+    <tr>
+      <td><a href="{{url_for('player.players')}}/{{player[4]}}">{{player[0]}} {{player[1]}}</a></td>
+      <td>{{player[2]}}</td>
+      <td>{{player[3]}}</td>
+      <td>{{player[5]}}</td>
+      <td>{{player[6]}}</td>
+      <td>{{player[7]}}</td>
+      <td>{{player[8]}}</td>
+    </tr>
+      {% endif %}
+    {% endfor %}
+    </ul>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="text-center mx-auto" style="width: 60%;">
+    <h4>{{game[3]}} Goalie</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Player Name</th>
+          <th scope="col">Position</th>
+          <th scope="col">Number</th>
+          <th scope="col">Shots Faced</th>
+          <th scope="col">Goals Conceded</th>
+          <th scope="col">Saves</th>
+          <th scope="col">Save Percentage</th>
+          <th scope="col">Shutouts</th>
+        </tr>
+      </thead>
+      <tbody>
+    {% for player in home_players %}
+      {% if player[2] == 'G' %}
+        <tr>
+          <td><a href="{{url_for('player.players')}}/{{player[4]}}">{{player[0]}} {{player[1]}}</a></td>
+          <td>{{player[2]}}</td>
+          <td>{{player[3]}}</td>
+          <td>{{player[9]}}</td>
+          <td>{{player[10]}}</td>
+          <td>{{player[11]}}</td>
+          <td>{{'%.2f' % player[12]}}%</td>
+          <td>{{player[13]}}</td>
+        </tr>
+      {% endif %}
+    {% endfor %}
+    </tbody>
+    </table>
+  </div>
+
+  <div class="text-center mx-auto" style="width: 60%;">
+    <h4>{{game[4]}} Skaters</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Player Name</th>
+          <th scope="col">Position</th>
+          <th scope="col">Number</th>
+          <th scope="col">Goals</th>
+          <th scope="col">Assists</th>
+          <th scope="col">Shots</th>
+          <th scope="col">Hits</th>
+        </tr>
+      </thead>
+      <tbody>
+    {% for player in away_players %}
+      {% if player[2] != 'G' %}
+    <tr>
+      <td><a href="{{url_for('player.players')}}/{{player[4]}}">{{player[0]}} {{player[1]}}</a></td>
+      <td>{{player[2]}}</td>
+      <td>{{player[3]}}</td>
+      <td>{{player[5]}}</td>
+      <td>{{player[6]}}</td>
+      <td>{{player[7]}}</td>
+      <td>{{player[8]}}</td>
+    </tr>
+      {% endif %}
+    {% endfor %}
+    </ul>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="text-center mx-auto" style="width: 60%;">
+    <h4>{{game[4]}} Goalie</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Player Name</th>
+          <th scope="col">Position</th>
+          <th scope="col">Number</th>
+          <th scope="col">Shots Faced</th>
+          <th scope="col">Goals Conceded</th>
+          <th scope="col">Saves</th>
+          <th scope="col">Save Percentage</th>
+          <th scope="col">Shutouts</th>
+        </tr>
+      </thead>
+      <tbody>
+    {% for player in away_players %}
+      {% if player[2] == 'G' %}
+        <tr>
+          <td><a href="{{url_for('player.players')}}/{{player[4]}}">{{player[0]}} {{player[1]}}</a></td>
+          <td>{{player[2]}}</td>
+          <td>{{player[3]}}</td>
+          <td>{{player[9]}}</td>
+          <td>{{player[10]}}</td>
+          <td>{{player[11]}}</td>
+          <td>{{'%.2f' % player[12]}}%</td>
+          <td>{{player[13]}}</td>
+        </tr>
+      {% endif %}
+    {% endfor %}
+    </tbody>
+    </table>
+  </div>
+<!--</div>-->
+{% endblock %}

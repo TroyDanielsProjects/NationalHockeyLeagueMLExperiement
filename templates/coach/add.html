@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="headtitle">{% block title %}Coach{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{url_for('coach.add_coach')}}">
+    <div class="row g-3" style=" margin-left: 10px; margin-right: 10px;">
+        <div class="col-md-3">
+          <label for="inputEmail4" class="form-label">Name</label>
+          <input type="text" class="form-control" name="name" placeholder="Name" aria-label="Name">
+        </div>
+        <div class="col-md-3">
+            <label for="inputEmail4" class="form-label">Date of Birth</label>
+            <input type="date" class="form-control" name="DOB" placeholder="DOB" aria-label="DOB">
+        </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary" style="margin-left: 20px;">Submit</button>
+</form>
+<br>
+{% endblock %}

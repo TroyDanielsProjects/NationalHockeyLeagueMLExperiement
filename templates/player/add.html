@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="headtitle">{% block title %}Add Player{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{url_for('player.add_player')}}">
+    <div class="row g-3" style="justify-content: space-between; margin-left: 10px; margin-right: 10px;">
+        <div class="col-md-3">
+          <label for="inputEmail4" class="form-label">First Name</label>
+          <input type="text" class="form-control" placeholder="First name" aria-label="First name" name="first_name" required>
+        </div>
+        <div class="col-md-3">
+          <label for="inputPassword4" class="form-label">Last Name</label>
+          <input type="text" class="form-control" placeholder="Last name" aria-label="Last name" name="last_name" required>
+        </div>
+        <div class="col-md-3">
+            <label for="inputEmail4" class="form-label">Nationality</label>
+            <input type="text" class="form-control" placeholder="Nationality" aria-label="Nationality" name="nationality" required>
+        </div>
+      </div>
+    <div class="row g-3" style="justify-content: space-between; margin-left: 10px; margin-right: 10px;">
+        <div class="col-md-3">
+            <label for="inputPassword4" class="form-label">Date Of Birth</label>
+            <input type="date" class="form-control" placeholder="DOB" aria-label="DOB" name="DOB" required>
+        </div>
+        <div class="col-md-3">
+            <label for="inputEmail4" class="form-label">Position</label>
+            <input type="text" class="form-control" placeholder="Position" aria-label="Position" name="position" required>
+        </div>
+        <div class="col-md-3">
+            <label for="inputEmail4" class="form-label">Number</label>
+            <input type="number" class="form-control" placeholder="Number" aria-label="Number" name="number" required>
+        </div>
+    </div>
+    <br>
+    <button type="submit" class="btn btn-primary" style="margin-left: 20px;">Submit</button>
+</form>
+{% endblock %}

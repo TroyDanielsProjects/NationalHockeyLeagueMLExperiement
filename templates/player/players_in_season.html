@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="headtitle">{% block title %}Players in the {{season}} season{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+<form method="POST" action="{{url_for('player.players')}}">
+  <select class="form-select" aria-label="Default select example" name="season_select">
+      <option selected>Select Season</option>
+      {% for year in years%}
+      <option value={{year}}>{{year}} Season</option>
+      {% endfor %}
+  </select>
+  <button type="submit" class="btn btn-primary">Go</button>
+</form>
+<div class="text-center mx-auto" style="width: 85%;">
+    <table class="table">
+    <thead>
+        <tr>
+        <th scope="col">Player First name</th>
+        <th scope="col">Player Last Name</th>
+        <th scope="col">Team</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for player in players%}
+    <tr>
+    <td>{{player[0]}}</td>
+    <td>{{player[1]}}</td>
+    <td>{{player[3]}}</td>
+    <td>
+      <a href="{{url_for('player.players')}}/{{player[2]}}"><button type="button" class="btn btn-primary">Go to Player</button></a>
+    </td>
+    </tr>
+    {% endfor %}
+    </ul>
+</div>
+{% endblock %}
