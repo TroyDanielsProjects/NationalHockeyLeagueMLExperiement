@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, render_template, g, redirect, Response, abort, Blueprint
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
+from .db import get_db
 
 bp = Blueprint('team', __name__)
 
@@ -28,8 +29,9 @@ ORDER BY h.year DESC;
 
 @bp.route('/teams')
 def teams():
-    cursor = g.conn.execute(text(teams_query))
-    g.conn.commit()
+    db = get_db()
+    cursor = db.execute(text(teams_query))
+    db.commit()
     teams = []
     for result in cursor:
         teams.append(result)
@@ -38,15 +40,16 @@ def teams():
 
 @bp.route('/teams/<int:id>')
 def team(id):
+    db = get_db()
     params_dict = {"id":id}
-    cursor = g.conn.execute(text(team_seasons_query),params_dict)
-    g.conn.commit()
+    cursor = db.execute(text(team_seasons_query),params_dict)
+    db.commit()
     seasons = []
     for result in cursor:
         seasons.append(result)
 
-    cursor = g.conn.execute(text(team_query),params_dict)
-    g.conn.commit()
+    cursor = db.execute(text(team_query),params_dict)
+    db.commit()
     team = []
     for result in cursor:
         team.append(result)

@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, render_template, g, redirect, Response, abort, Blueprint
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
+from .db import get_db
 
 bp = Blueprint('coach', __name__)
 
@@ -72,8 +73,9 @@ WHERE c.coachid = :id;
 
 @bp.route('/coaches', methods=['GET','POST'])
 def coaches():
-    cursor = g.conn.execute(text(min_max_years))
-    g.conn.commit()
+    db = get_db()
+    cursor = db.execute(text(min_max_years))
+    db.commit()
     max_min_years = []
     for result in cursor:
         max_min_years.append(result)
@@ -83,8 +85,8 @@ def coaches():
     for year in range(min_year, max_year+1):
         years.append(year)
     if request.method == 'GET':
-        cursor = g.conn.execute(text(coaches_query))
-        g.conn.commit()
+        cursor = db.execute(text(coaches_query))
+        db.commit()
         coaches = []
         for result in cursor:
             coaches.append(result)
@@ -94,8 +96,8 @@ def coaches():
         season = year
         if year == 'Select Season':
             return redirect('/coaches')
-        cursor = g.conn.execute(text(coaches_during_season_query),{"year":year})
-        g.conn.commit()
+        cursor = db.execute(text(coaches_during_season_query),{"year":year})
+        db.commit()
         coaches = []
         for result in cursor:
             coaches.append(result)
@@ -105,15 +107,16 @@ def coaches():
 
 @bp.route('/coaches/<int:id>')
 def coach(id):
+    db = get_db()
     params_dict = {"id":id}
-    cursor = g.conn.execute(text(coach_query),params_dict)
-    g.conn.commit()
+    cursor = db.execute(text(coach_query),params_dict)
+    db.commit()
     coach = []
     for result in cursor:
         coach.append(result)
 
-    cursor = g.conn.execute(text(coached_seasons_query),params_dict)
-    g.conn.commit()
+    cursor = db.execute(text(coached_seasons_query),params_dict)
+    db.commit()
     seasons_coached = []
     for result in cursor:
         seasons_coached.append(result)
@@ -123,12 +126,13 @@ def coach(id):
 
 @bp.route('/coaches/add', methods=['POST'])
 def add_coach():
+    db = get_db()
     coachid = get_max_playerid() + 1
     name = request.form['name']
     DOB = request.form['DOB']
     params_dict = {"coachid":coachid, "name":name, "DOB":DOB}
-    g.conn.execute(text(add_coach_query),params_dict)
-    g.conn.commit()
+    db.execute(text(add_coach_query),params_dict)
+    db.commit()
 
     return redirect('/coaches')
 
@@ -140,18 +144,20 @@ def add_coaches_form():
 # todo -- test this
 @bp.route('/coaches/delete/<int:id>', methods=['GET'])
 def delete_coach(id):
+    db = get_db()
     params_dict = {"id":id}
-    g.conn.execute(text(delete_coach_query),params_dict)
-    g.conn.commit()
+    db.execute(text(delete_coach_query),params_dict)
+    db.commit()
     return redirect('/coaches')
 
 # todo -- test this
 @bp.route('/coach/update/<int:id>', methods=['GET','POST'])
 def update_coach(id):
+    db = get_db()
     if request.method == "GET":
         params_dict = {"id":id}
-        cursor = g.conn.execute(text(coach_query),params_dict)
-        g.conn.commit()
+        cursor = db.execute(text(coach_query),params_dict)
+        db.commit()
         coaches = []
         for result in cursor:
             coaches.append(result)
@@ -161,13 +167,14 @@ def update_coach(id):
         name = request.form['name']
         DOB = request.form['DOB']
         params_dict = {"coachid":coachid, "name":name, "DOB":DOB}
-        g.conn.execute(text(update_player_query),params_dict)
-        g.conn.commit()
+        db.execute(text(update_player_query),params_dict)
+        db.commit()
         return redirect('/coaches'+str(id))
 
 def get_max_playerid():
-    cursor = g.conn.execute(text(max_coachid_query))
-    g.conn.commit()
+    db = get_db()
+    cursor = db.execute(text(max_coachid_query))
+    db.commit()
     id = []
     for result in cursor:
         id.append(result)

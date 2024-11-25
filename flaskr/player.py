@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, render_template, g, redirect, Response, abort, Blueprint
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
+from .db import get_db
 
 bp = Blueprint('player', __name__)
 
@@ -71,8 +72,9 @@ FROM plays_for pf;
 
 @bp.route('/players', methods=['GET','POST'])
 def players():
-    cursor = g.conn.execute(text(min_max_years))
-    g.conn.commit()
+    db = get_db()
+    cursor = db.execute(text(min_max_years))
+    db.commit()
     max_min_years = []
     for result in cursor:
         max_min_years.append(result)
@@ -83,8 +85,8 @@ def players():
         years.append(year)
 
     if request.method == 'GET':
-        cursor = g.conn.execute(text(players_query))
-        g.conn.commit()
+        cursor = db.execute(text(players_query))
+        db.commit()
         players = []
         for result in cursor:
             players.append(result)
@@ -94,8 +96,8 @@ def players():
         season = year
         if year == 'Select Season':
             return redirect('/players')
-        cursor = g.conn.execute(text(players_play_in_season_query),{"year":year})
-        g.conn.commit()
+        cursor = db.execute(text(players_play_in_season_query),{"year":year})
+        db.commit()
         players = []
         for result in cursor:
             players.append(result)
@@ -105,14 +107,15 @@ def players():
 
 @bp.route('/players/<int:id>')
 def player(id):
+    db = get_db()
     params_dict = {"id":id}
-    cursor = g.conn.execute(text(player_query2),params_dict)
-    g.conn.commit()
+    cursor = db.execute(text(player_query2),params_dict)
+    db.commit()
     players = []
     for result in cursor:
         players.append(result)
-    cursor = g.conn.execute(text(player_played_season_query),params_dict)
-    g.conn.commit()
+    cursor = db.execute(text(player_played_season_query),params_dict)
+    db.commit()
     seasons = []
     for result in cursor:
         seasons.append(result)
@@ -122,6 +125,7 @@ def player(id):
 
 @bp.route('/players/add', methods=['POST'])
 def add_player():
+    db = get_db()
     playerid = get_max_playerid() + 1
     first_name = request.form['first_name']
     last_name = request.form['last_name']
@@ -131,8 +135,8 @@ def add_player():
     number = request.form['number']
     params_dict = {"playerid":playerid, "first_name":first_name, "last_name":last_name, "nationality":nationality, 
                    "DOB":DOB, "position":position, "number":number}
-    g.conn.execute(text(add_player_query),params_dict)
-    g.conn.commit()
+    db.execute(text(add_player_query),params_dict)
+    db.commit()
 
     return redirect('/players')
 
@@ -143,17 +147,19 @@ def add_player_form():
 
 @bp.route('/players/delete/<int:id>', methods=['GET'])
 def delete_player(id):
+    db = get_db()
     params_dict = {"id":id}
-    g.conn.execute(text(delete_player_query),params_dict)
-    g.conn.commit()
+    db.execute(text(delete_player_query),params_dict)
+    db.commit()
     return redirect('/players')
 
 @bp.route('/players/update/<int:id>', methods=['GET','POST'])
 def update_player(id):
+    db = get_db()
     if request.method == "GET":
         params_dict = {"id":id}
-        cursor = g.conn.execute(text(player_query),params_dict)
-        g.conn.commit()
+        cursor = db.execute(text(player_query),params_dict)
+        db.commit()
         players = []
         for result in cursor:
             players.append(result)
@@ -168,14 +174,15 @@ def update_player(id):
         number = request.form['number']
         params_dict = {"playerid":playerid, "first_name":first_name, "last_name":last_name, "nationality":nationality, 
                     "DOB":DOB, "position":position, "number":number}
-        g.conn.execute(text(update_player_query),params_dict)
-        g.conn.commit()
+        db.execute(text(update_player_query),params_dict)
+        db.commit()
         return redirect('/players/'+str(id))
 
 
 def get_max_playerid():
-    cursor = g.conn.execute(text(max_playerid_query))
-    g.conn.commit()
+    db = get_db()
+    cursor = db.execute(text(max_playerid_query))
+    db.commit()
     id = []
     for result in cursor:
         id.append(result)

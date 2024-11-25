@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, render_template, g, redirect, Response, abort, Blueprint
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
+from .db import get_db
 
 # create a blueprint for the main page
 bp = Blueprint('index', __name__)
@@ -56,21 +57,21 @@ upcoming_games_query = """"""
 
 @bp.route('/')
 def index():
-
-    cursor = g.conn.execute(text(top_coaches_query))
-    g.conn.commit()
+    db = get_db()
+    cursor = db.execute(text(top_coaches_query))
+    db.commit()
     coaches = []
     for result in cursor:
         coaches.append(result)
 
-    cursor = g.conn.execute(text(top_players_query))
-    g.conn.commit()
+    cursor = db.execute(text(top_players_query))
+    db.commit()
     players = []
     for result in cursor:
         players.append(result)
 
-    cursor = g.conn.execute(text(most_recent_games_query))
-    g.conn.commit()
+    cursor = db.execute(text(most_recent_games_query))
+    db.commit()
     recent_games = []
     for result in cursor:
         recent_games.append(result)

@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, render_template, g, redirect, Response, abort, Blueprint
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
+from .db import get_db
 
 bp = Blueprint('game', __name__)
 
@@ -96,8 +97,9 @@ LEFT JOIN goalie_stats g ON h.gameid = g.gameid AND h.playerid = g.playerid;
 
 @bp.route('/games', methods=['GET','POST'])
 def games():
-    cursor = g.conn.execute(text(games_query))
-    g.conn.commit()
+    db = get_db()
+    cursor = db.execute(text(games_query))
+    db.commit()
     games = []
     for result in cursor:
         games.append(result)
@@ -105,21 +107,22 @@ def games():
 
 @bp.route('/games/<int:id>', methods=['GET','POST'])
 def game(id):
+    db = get_db()
     params_dict = {"id":id}
-    cursor = g.conn.execute(text(game_query),params_dict)
-    g.conn.commit()
+    cursor = db.execute(text(game_query),params_dict)
+    db.commit()
     games = []
     for result in cursor:
         games.append(result)
     
-    cursor = g.conn.execute(text(home_players_in_game_query),params_dict)
-    g.conn.commit()
+    cursor = db.execute(text(home_players_in_game_query),params_dict)
+    db.commit()
     home_players = []
     for result in cursor:
         home_players.append(result)
 
-    cursor = g.conn.execute(text(away_players_in_game_query),params_dict)
-    g.conn.commit()
+    cursor = db.execute(text(away_players_in_game_query),params_dict)
+    db.commit()
     away_players = []
     for result in cursor:
         away_players.append(result)

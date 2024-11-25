@@ -2,6 +2,7 @@ import os
 from flask import Flask, request, render_template, g, redirect, Response, abort, Blueprint
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
+from .db import get_db
 
 bp = Blueprint('search', __name__)
 
@@ -25,23 +26,24 @@ WHERE t.name LIKE :search
 
 @bp.route('/search', methods=['POST'])
 def search():
+    db = get_db()
     search = request.form['search']
     params_dict = {"search" : f"%{search}%"}
 
-    cursor = g.conn.execute(text(search_players_query), params_dict)
-    g.conn.commit()
+    cursor = db.execute(text(search_players_query), params_dict)
+    db.commit()
     players = []
     for result in cursor:
         players.append(result)
 
-    cursor = g.conn.execute(text(search_coaches_query), params_dict)
-    g.conn.commit()
+    cursor = db.execute(text(search_coaches_query), params_dict)
+    db.commit()
     coaches = []
     for result in cursor:
         coaches.append(result)
 
-    cursor = g.conn.execute(text(search_teams_query), params_dict)
-    g.conn.commit()
+    cursor = db.execute(text(search_teams_query), params_dict)
+    db.commit()
     teams = []
     for result in cursor:
         teams.append(result)
