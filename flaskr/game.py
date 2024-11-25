@@ -48,7 +48,7 @@ player_stats (gameid, playerid, goals, assists, shots, hits) AS (
 SELECT ssig.gameid , ssig.playerid, ss.goals, ss.assists, ss.shots, ss.hits
 FROM Skater_Stats_In_Game ssig NATURAL JOIN Skater_Stats ss
 ),
-goalie_stats (gameid, playerid, shots_faced, goals_conceded, saves, save_pct, shutouts) AS (
+goalie_stats_total (gameid, playerid, shots_faced, goals_conceded, saves, save_pct, shutouts) AS (
     SELECT gsig.gameid, gsig.playerid, gs.shots_faced, gs.goals_conceded, gs.saves, gs.save_pct, gs.shutouts
     FROM Goalie_Stats_In_Game gsig
     JOIN Goalie_Stats gs ON gsig.gstatsid = gs.gstatsid
@@ -57,7 +57,7 @@ SELECT h.first_name, h.last_name, h.position, h.number, h.playerid, p.goals, p.a
 g.shots_faced, g.goals_conceded, g.saves, g.save_pct, g.shutouts
 FROM home_players h LEFT JOIN player_stats p
 ON h.gameid = p.gameid AND h.playerid = p.playerid
-LEFT JOIN goalie_stats g ON h.gameid = g.gameid AND h.playerid = g.playerid;
+LEFT JOIN goalie_stats_total g ON h.gameid = g.gameid AND h.playerid = g.playerid;
 """
 
 away_players_in_game_query = """
@@ -81,7 +81,7 @@ player_stats (gameid, playerid, goals, assists, shots, hits) AS (
 SELECT ssig.gameid , ssig.playerid, ss.goals, ss.assists, ss.shots, ss.hits
 FROM Skater_Stats_In_Game ssig NATURAL JOIN Skater_Stats ss
 ),
-goalie_stats (gameid, playerid, shots_faced, goals_conceded, saves, save_pct, shutouts) AS (
+goalie_stats_total (gameid, playerid, shots_faced, goals_conceded, saves, save_pct, shutouts) AS (
     SELECT gsig.gameid, gsig.playerid, gs.shots_faced, gs.goals_conceded, gs.saves, gs.save_pct, gs.shutouts
     FROM Goalie_Stats_In_Game gsig
     JOIN Goalie_Stats gs ON gsig.gstatsid = gs.gstatsid
@@ -90,7 +90,7 @@ SELECT h.first_name, h.last_name, h.position, h.number, h.playerid, p.goals, p.a
 g.shots_faced, g.goals_conceded, g.saves, g.save_pct, g.shutouts
 FROM home_players h LEFT JOIN player_stats p
 ON h.gameid = p.gameid AND h.playerid = p.playerid
-LEFT JOIN goalie_stats g ON h.gameid = g.gameid AND h.playerid = g.playerid;
+LEFT JOIN goalie_stats_total g ON h.gameid = g.gameid AND h.playerid = g.playerid;
 """
 
 
@@ -98,7 +98,7 @@ LEFT JOIN goalie_stats g ON h.gameid = g.gameid AND h.playerid = g.playerid;
 @bp.route('/games', methods=['GET','POST'])
 def games():
     db = get_db()
-    cursor = db.execute(text(games_query))
+    cursor = db.execute(games_query)
     db.commit()
     games = []
     for result in cursor:
@@ -109,19 +109,19 @@ def games():
 def game(id):
     db = get_db()
     params_dict = {"id":id}
-    cursor = db.execute(text(game_query),params_dict)
+    cursor = db.execute(game_query,params_dict)
     db.commit()
     games = []
     for result in cursor:
         games.append(result)
     
-    cursor = db.execute(text(home_players_in_game_query),params_dict)
+    cursor = db.execute(home_players_in_game_query,params_dict)
     db.commit()
     home_players = []
     for result in cursor:
         home_players.append(result)
 
-    cursor = db.execute(text(away_players_in_game_query),params_dict)
+    cursor = db.execute(away_players_in_game_query,params_dict)
     db.commit()
     away_players = []
     for result in cursor:

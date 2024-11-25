@@ -30,19 +30,19 @@ def search():
     search = request.form['search']
     params_dict = {"search" : f"%{search}%"}
 
-    cursor = db.execute(text(search_players_query), params_dict)
+    cursor = db.execute(search_players_query, params_dict)
     db.commit()
     players = []
     for result in cursor:
         players.append(result)
 
-    cursor = db.execute(text(search_coaches_query), params_dict)
+    cursor = db.execute(search_coaches_query, params_dict)
     db.commit()
     coaches = []
     for result in cursor:
         coaches.append(result)
 
-    cursor = db.execute(text(search_teams_query), params_dict)
+    cursor = db.execute(search_teams_query, params_dict)
     db.commit()
     teams = []
     for result in cursor:

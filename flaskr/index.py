@@ -58,19 +58,19 @@ upcoming_games_query = """"""
 @bp.route('/')
 def index():
     db = get_db()
-    cursor = db.execute(text(top_coaches_query))
+    cursor = db.execute(top_coaches_query)
     db.commit()
     coaches = []
     for result in cursor:
         coaches.append(result)
 
-    cursor = db.execute(text(top_players_query))
+    cursor = db.execute(top_players_query)
     db.commit()
     players = []
     for result in cursor:
         players.append(result)
 
-    cursor = db.execute(text(most_recent_games_query))
+    cursor = db.execute(most_recent_games_query)
     db.commit()
     recent_games = []
     for result in cursor:

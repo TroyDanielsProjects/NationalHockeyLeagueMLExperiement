@@ -79,11 +79,12 @@ WHERE pf.year = :year AND pf.teamid = :teamid AND pf.playerid = p.playerid
 @bp.route('/seasons', methods=['GET','POST'])
 def seasons():
     db = get_db()
-    cursor = db.execute(text(min_max_season_query))
+    cursor = db.execute(min_max_season_query)
     db.commit()
     max_min_years = []
     for result in cursor:
         max_min_years.append(result)
+    print(max_min_years)
     max_year = max_min_years[0][0]
     min_year = max_min_years[0][1]
     years=[]
@@ -92,13 +93,13 @@ def seasons():
 
     if request.method == 'GET':
         params_dict = {"year": max_year}
-        cursor = db.execute(text(current_seasons_query), params_dict)
+        cursor = db.execute(current_seasons_query, params_dict)
         db.commit()
         current_season = []
         for result in cursor:
             current_season.append(result)
 
-        cursor = db.execute(text(teams_in_season_query), params_dict)
+        cursor = db.execute(teams_in_season_query, params_dict)
         db.commit()
         teams = []
         for result in cursor:
@@ -108,13 +109,13 @@ def seasons():
     else:
         year = request.form['season_select']
         params_dict = {"year": year}
-        cursor = db.execute(text(current_seasons_query), params_dict)
+        cursor = db.execute(current_seasons_query, params_dict)
         db.commit()
         current_season = []
         for result in cursor:
             current_season.append(result)
 
-        cursor = db.execute(text(teams_in_season_query), params_dict)
+        cursor = db.execute(teams_in_season_query, params_dict)
         db.commit()
         teams = []
         for result in cursor:
@@ -124,7 +125,7 @@ def seasons():
 @bp.route('/seasons/<int:year>')
 def season(year):
     db = get_db()
-    cursor = db.execute(text(min_max_season_query))
+    cursor = db.execute(min_max_season_query)
     db.commit()
     max_min_years = []
     for result in cursor:
@@ -136,13 +137,13 @@ def season(year):
         years.append(year)
 
     params_dict = {"year": year}
-    cursor = db.execute(text(current_seasons_query), params_dict)
+    cursor = db.execute(current_seasons_query, params_dict)
     db.commit()
     current_season = []
     for result in cursor:
         current_season.append(result)
 
-    cursor = db.execute(text(teams_in_season_query), params_dict)
+    cursor = db.execute(teams_in_season_query, params_dict)
     db.commit()
     teams = []
     for result in cursor:
@@ -154,19 +155,19 @@ def season(year):
 def team_in_season(year, teamid):
     db = get_db()
     params_dict = {"year": year, "teamid" :teamid}
-    cursor = db.execute(text(team_in_season_query), params_dict)
+    cursor = db.execute(team_in_season_query, params_dict)
     db.commit()
     team = []
     for result in cursor:
         team.append(result)
 
-    cursor = db.execute(text(team_played_games_in_season_query), params_dict)
+    cursor = db.execute(team_played_games_in_season_query, params_dict)
     db.commit()
     games = []
     for result in cursor:
         games.append(result)
 
-    cursor = db.execute(text(team_roster_in_season), params_dict)
+    cursor = db.execute(team_roster_in_season, params_dict)
     db.commit()
     players = []
     for result in cursor:

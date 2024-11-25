@@ -74,7 +74,7 @@ WHERE c.coachid = :id;
 @bp.route('/coaches', methods=['GET','POST'])
 def coaches():
     db = get_db()
-    cursor = db.execute(text(min_max_years))
+    cursor = db.execute(min_max_years)
     db.commit()
     max_min_years = []
     for result in cursor:
@@ -85,7 +85,7 @@ def coaches():
     for year in range(min_year, max_year+1):
         years.append(year)
     if request.method == 'GET':
-        cursor = db.execute(text(coaches_query))
+        cursor = db.execute(coaches_query)
         db.commit()
         coaches = []
         for result in cursor:
@@ -96,7 +96,7 @@ def coaches():
         season = year
         if year == 'Select Season':
             return redirect('/coaches')
-        cursor = db.execute(text(coaches_during_season_query),{"year":year})
+        cursor = db.execute(coaches_during_season_query,{"year":year})
         db.commit()
         coaches = []
         for result in cursor:
@@ -109,13 +109,13 @@ def coaches():
 def coach(id):
     db = get_db()
     params_dict = {"id":id}
-    cursor = db.execute(text(coach_query),params_dict)
+    cursor = db.execute(coach_query,params_dict)
     db.commit()
     coach = []
     for result in cursor:
         coach.append(result)
 
-    cursor = db.execute(text(coached_seasons_query),params_dict)
+    cursor = db.execute(coached_seasons_query,params_dict)
     db.commit()
     seasons_coached = []
     for result in cursor:
@@ -131,7 +131,7 @@ def add_coach():
     name = request.form['name']
     DOB = request.form['DOB']
     params_dict = {"coachid":coachid, "name":name, "DOB":DOB}
-    db.execute(text(add_coach_query),params_dict)
+    db.execute(add_coach_query,params_dict)
     db.commit()
 
     return redirect('/coaches')
@@ -146,7 +146,7 @@ def add_coaches_form():
 def delete_coach(id):
     db = get_db()
     params_dict = {"id":id}
-    db.execute(text(delete_coach_query),params_dict)
+    db.execute(delete_coach_query,params_dict)
     db.commit()
     return redirect('/coaches')
 
@@ -156,7 +156,7 @@ def update_coach(id):
     db = get_db()
     if request.method == "GET":
         params_dict = {"id":id}
-        cursor = db.execute(text(coach_query),params_dict)
+        cursor = db.execute(coach_query,params_dict)
         db.commit()
         coaches = []
         for result in cursor:
@@ -167,13 +167,13 @@ def update_coach(id):
         name = request.form['name']
         DOB = request.form['DOB']
         params_dict = {"coachid":coachid, "name":name, "DOB":DOB}
-        db.execute(text(update_player_query),params_dict)
+        db.execute(update_player_query,params_dict)
         db.commit()
         return redirect('/coaches'+str(id))
 
 def get_max_playerid():
     db = get_db()
-    cursor = db.execute(text(max_coachid_query))
+    cursor = db.execute(max_coachid_query)
     db.commit()
     id = []
     for result in cursor:

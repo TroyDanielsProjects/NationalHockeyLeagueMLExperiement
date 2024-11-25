@@ -30,7 +30,7 @@ ORDER BY h.year DESC;
 @bp.route('/teams')
 def teams():
     db = get_db()
-    cursor = db.execute(text(teams_query))
+    cursor = db.execute(teams_query)
     db.commit()
     teams = []
     for result in cursor:
@@ -42,13 +42,13 @@ def teams():
 def team(id):
     db = get_db()
     params_dict = {"id":id}
-    cursor = db.execute(text(team_seasons_query),params_dict)
+    cursor = db.execute(team_seasons_query,params_dict)
     db.commit()
     seasons = []
     for result in cursor:
         seasons.append(result)
 
-    cursor = db.execute(text(team_query),params_dict)
+    cursor = db.execute(team_query,params_dict)
     db.commit()
     team = []
     for result in cursor:

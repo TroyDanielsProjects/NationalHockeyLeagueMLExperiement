@@ -73,7 +73,7 @@ FROM plays_for pf;
 @bp.route('/players', methods=['GET','POST'])
 def players():
     db = get_db()
-    cursor = db.execute(text(min_max_years))
+    cursor = db.execute(min_max_years)
     db.commit()
     max_min_years = []
     for result in cursor:
@@ -85,7 +85,7 @@ def players():
         years.append(year)
 
     if request.method == 'GET':
-        cursor = db.execute(text(players_query))
+        cursor = db.execute(players_query)
         db.commit()
         players = []
         for result in cursor:
@@ -96,7 +96,7 @@ def players():
         season = year
         if year == 'Select Season':
             return redirect('/players')
-        cursor = db.execute(text(players_play_in_season_query),{"year":year})
+        cursor = db.execute(players_play_in_season_query,{"year":year})
         db.commit()
         players = []
         for result in cursor:
@@ -109,12 +109,12 @@ def players():
 def player(id):
     db = get_db()
     params_dict = {"id":id}
-    cursor = db.execute(text(player_query2),params_dict)
+    cursor = db.execute(player_query2,params_dict)
     db.commit()
     players = []
     for result in cursor:
         players.append(result)
-    cursor = db.execute(text(player_played_season_query),params_dict)
+    cursor = db.execute(player_played_season_query,params_dict)
     db.commit()
     seasons = []
     for result in cursor:
@@ -135,7 +135,7 @@ def add_player():
     number = request.form['number']
     params_dict = {"playerid":playerid, "first_name":first_name, "last_name":last_name, "nationality":nationality, 
                    "DOB":DOB, "position":position, "number":number}
-    db.execute(text(add_player_query),params_dict)
+    db.execute(add_player_query,params_dict)
     db.commit()
 
     return redirect('/players')
@@ -149,7 +149,7 @@ def add_player_form():
 def delete_player(id):
     db = get_db()
     params_dict = {"id":id}
-    db.execute(text(delete_player_query),params_dict)
+    db.execute(delete_player_query,params_dict)
     db.commit()
     return redirect('/players')
 
@@ -158,7 +158,7 @@ def update_player(id):
     db = get_db()
     if request.method == "GET":
         params_dict = {"id":id}
-        cursor = db.execute(text(player_query),params_dict)
+        cursor = db.execute(player_query,params_dict)
         db.commit()
         players = []
         for result in cursor:
@@ -174,14 +174,14 @@ def update_player(id):
         number = request.form['number']
         params_dict = {"playerid":playerid, "first_name":first_name, "last_name":last_name, "nationality":nationality, 
                     "DOB":DOB, "position":position, "number":number}
-        db.execute(text(update_player_query),params_dict)
+        db.execute(update_player_query,params_dict)
         db.commit()
         return redirect('/players/'+str(id))
 
 
 def get_max_playerid():
     db = get_db()
-    cursor = db.execute(text(max_playerid_query))
+    cursor = db.execute(max_playerid_query)
     db.commit()
     id = []
     for result in cursor:
