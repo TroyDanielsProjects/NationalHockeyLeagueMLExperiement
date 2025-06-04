@@ -1,40 +1,55 @@
-# NHL Season Analytics & Prediction Model
+# 🏒 NHL Season Analytics Web App
 
-This project is designed to collect, analyze, and visualize data from the current NHL season using web scraping and API calls to NHL.com. The data is stored in a relational database, likely PostgreSQL, and is leveraged in complex machine learning models to provide predictive insights and analytics. The ultimate goal is to build a model that can predict future game outcomes and potentially outperform betting odds set by Vegas.
+This project is a Flask-based web application that displays NHL season statistics. Data is gathered from NHL.com through kaggle and other resources, then stored in a relational database ( SQLite). A simple web interface allows users to explore game and team data interactively.
 
-The project also includes a user interface (UI) built with Flask, allowing users to interact with the data and view the results of machine learning predictions.
+> ⚠️ Originally designed to include machine learning models for predictive analytics, this version focuses solely on data ingestion, storage, and visualization.
 
-## Key Features
+---
 
-- **Data Collection:** Web scraping and API calls to gather up-to-date NHL season statistics from NHL.com.
-- **Relational Database:** Data is stored in a PostgreSQL (or SQLite for testing) relational database for easy querying and management.
-- **Machine Learning Models:** The application utilizes machine learning algorithms to analyze historical data and generate predictions for upcoming games, with a focus on overtime.
-- **Flask Web UI:** A basic web interface built with Flask to interact with the data, view insights, and access prediction results.
+## 🔑 Key Features
 
-## Current Status
+- **📊 Data Collection:** Pulls NHL statistics using public API calls and web scraping.
+- **🗃️ Relational Database:** Stores structured data (games, teams, players) in SQLite.
+- **🌐 Flask Web UI:** Interactive interface for querying and viewing the data.
 
-- **Database Design:** A relational database schema has been designed to store the NHL season data. A test implementation has been created using SQLite with a small set of accurate data for initial testing.
-- **Web UI:** The basic pages of the user interface are functional and connected to the database. The Flask app allows users to query and visualize the data.
+---
 
-## Setup & Installation
+## 🚧 Project Status
 
-### Prerequisites
+- ✅ Database schema and sample data implemented and tested.
+- ✅ Flask frontend is live and integrated with the database.
+- ❌ Machine learning features not included in this version.
+
+---
+
+## ⚙️ Setup & Installation
+
+### 🔗 Prerequisites
+
 - Python 3.x
-- SQLite (for testing) or PostgreSQL
-- Flask
+- `pip` package manager
+- SQLite (default)
+Install the required packages:
 
-### Installation Steps
+```bash
+pip install flask requests beautifulsoup4
+```
 
 1. **Clone the Repository**
+Clone the repository and then follow the instructions below:
+   
+bash
    ```bash
-   git clone https://github.com/yourusername/nhl-season-analytics.git
-   cd nhl-season-analytics
+cd nhl-season-analytics
+```
 
 **Set Up the Database**
 
 To initialize the database, run the following Bash command from the project's base folder:
 
+```bash
 flask --app flaskr init-db
+```
 
 This will set up the database schema and load initial data. SQLite is used by default for testing, but you can modify the application to use PostgreSQL for production.
 
@@ -42,9 +57,10 @@ This will set up the database schema and load initial data. SQLite is used by de
 
 To start the Flask web server run:
 
+```bash
 flask --app flaskr run --debug
+```
 
 This will start the development server, and the application should be accessible in your browser at http://127.0.0.1:5000/.
 
-Note: This is a work in progress, continuously adding new features and improving existing ones. Stay tuned for updates!
-
+Note: This is a work in progress
